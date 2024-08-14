@@ -1,12 +1,13 @@
 const express = require('express');
 const { updateChat, deleteChat } = require('../controllers/adminController');
-const router = express.Router();
-const authMiddleware = require('../middleware/authMiddleware'); // Middleware to check if the user is an admin
+const authMiddleware = require('../middleware/authMiddleware');
 
-// Define the route to update a chat by ID
+const router = express.Router();
+
+// PUT route to update a chat by ID
 router.put('/chat/:id', authMiddleware, updateChat);
 
-// Define the route to delete a chat by ID
+// DELETE route to delete a chat by ID (not covered in detail here, but assuming it exists)
 router.delete('/chat/:id', authMiddleware, deleteChat);
 
 module.exports = router;
