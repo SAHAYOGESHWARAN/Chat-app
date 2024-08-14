@@ -1,10 +1,14 @@
 const express = require('express');
-const { updateChat, deleteChat } = require('../controllers/adminController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.put('/chat/:id', authMiddleware, updateChat);
-router.delete('/chat/:id', authMiddleware, deleteChat);
+router.put('/admin/chat/:id', authMiddleware, (req, res) => {
+  // Handle the update chat logic here
+});
+
+router.delete('/admin/chat/:id', authMiddleware, (req, res) => {
+  // Handle the delete chat logic here
+});
 
 module.exports = router;
