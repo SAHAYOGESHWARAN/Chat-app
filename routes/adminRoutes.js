@@ -1,9 +1,12 @@
 const express = require('express');
 const { updateChat, deleteChat } = require('../controllers/adminController');
-const { protect, admin } = require('../middleware/authMiddleware');
 const router = express.Router();
+const authMiddleware = require('../middleware/authMiddleware'); // Middleware to check if the user is an admin
 
-router.put('/chat/:id', protect, admin, updateChat);
-router.delete('/chat/:id', protect, admin, deleteChat);
+// Define the route to update a chat by ID
+router.put('/chat/:id', authMiddleware, updateChat);
+
+// Define the route to delete a chat by ID
+router.delete('/chat/:id', authMiddleware, deleteChat);
 
 module.exports = router;
