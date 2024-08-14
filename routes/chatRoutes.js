@@ -1,8 +1,10 @@
 const express = require('express');
 const { askQuestion } = require('../controllers/chatController');
-const { protect } = require('../middleware/authMiddleware');
+const authMiddleware = require('../middleware/authMiddleware'); // Corrected import
+
 const router = express.Router();
 
-router.post('/ask', protect, askQuestion);
+// Use authMiddleware for protecting the route
+router.post('/ask', authMiddleware, askQuestion);
 
 module.exports = router;
