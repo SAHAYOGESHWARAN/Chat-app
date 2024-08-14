@@ -36,19 +36,39 @@ exports.updateChat = async (req, res) => {
     res.status(500).json({ error: 'Server error', message: error.message });
   }
 };
-module.exports = {
-    updateChat,
-    deleteChat,
-    // Export other functions if needed
-  };
-  
 
-//   const Chat = require('../models/chatModel');
+// Function to delete a chat by ID (implement this function if needed)
+exports.deleteChat = async (req, res) => {
+  try {
+    const chatId = req.params.id;
 
-// exports.updateChat = async (req, res) => {
-//   // ... (code from above)
-// };
+    // Validate the ID format
+    if (!chatId.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({ error: 'Invalid chat ID format' });
+    }
 
-// exports.deleteChat = async (req, res) => {
-//   // Implement deleteChat function here
+    // Delete the chat
+    const deletedChat = await Chat.findByIdAndDelete(chatId);
+
+    if (!deletedChat) {
+      return res.status(404).json({ error: 'Chat not found' });
+    }
+
+    // Return a success response
+    res.status(204).send(); // No Content
+  } catch (error) {
+    // Check if the error is related to MongoDB or Mongoose
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      return res.status(400).json({ error: 'Invalid chat ID format' });
+    }
+
+    // General server error
+    res.status(500).json({ error: 'Server error', message: error.message });
+  }
+};
+
+// module.exports = {
+//   updateChat,
+//   deleteChat,
+//   // Export other functions if needed
 // };
